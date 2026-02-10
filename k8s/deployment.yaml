@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angkorchat-deployment
+  labels:
+    app: angkorchat
+spec:
+  replicas: 2 # Runs two copies of your app for reliability
+  selector:
+    matchLabels:
+      app: angkorchat
+  template:
+    metadata:
+      labels:
+        app: angkorchat
+    spec:
+      containers:
+      - name: angkorchat
+        # Replace 'your-username' with your actual Docker Hub username
+        image: computingdocker/angkorchat:latest 
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"

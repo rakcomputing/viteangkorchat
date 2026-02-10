@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: angkorchat-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # This automatically requests an SSL certificate if you have cert-manager
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  tls:
+  - hosts:
+    - angkorchat.rakdev.online
+    secretName: angkorchat-tls-secret
+  rules:
+  - host: angkorchat.rakdev.online
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: angkorchat-service
+            port:
+              number: 80
